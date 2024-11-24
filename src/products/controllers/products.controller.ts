@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Param, Post, Body, Put, Delete, HttpStatus, HttpCode, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { ProductosService } from './../services/productos.service';
-import { ParseIntPipe } from './../common/parse-int/parse-int.pipe';
+import { ParseIntPipe } from './../../common/parse-int/parse-int.pipe';
 import { CreateProductDto, UpdateProductDto } from './../dtos/products.dto';
 
 @Controller('products')
