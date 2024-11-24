@@ -1,19 +1,28 @@
 import { Controller, Get, Query, Param, Post, Body, Put, Delete, HttpStatus, HttpCode, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { ProductosService } from './../services/productos.service';
+import { ParseIntPipe } from './../common/parse-int/parse-int.pipe';
+import { CreateProductDto, UpdateProductDto } from './../dtos/products.dto';
 
 @Controller('products')
 export class ProductsController {
+
+  constructor(private productsService: ProductosService){
+
+  }
+
   @Get()
-  getProducts(
-    @Res() response: Response,
+  getAll(
+    //@Res() response: Response,
     @Query('limit') limit = 100, // TS puede saber que tipo de dato es
     @Query('offset') offset:number = 0,
     @Query('brand') brand:string
   ){
     // const { limit, offset } = params; <-- Deconstrucción
-    response.status(404).send({
-      message: `products: limits => ${limit} offset => ${offset} brand => ${brand}`,
-    });
+    // response.status(404).send({
+    //   message: `products: limits => ${limit} offset => ${offset} brand => ${brand}`,
+    // });
+    return this.productsService.findAll();
   }
 
   @Get('filter')
@@ -23,32 +32,33 @@ export class ProductsController {
 
   @Get(':productId')
   @HttpCode(HttpStatus.ACCEPTED)
-  getProduct(@Param('productId') productId:string){
-    return {
-      message: `product ${productId}`
-    }
+  getOne(@Param('productId', ParseIntPipe) productId:number){
+    return this.productsService.findOne(productId);
   }
 
   @Post()
-  create(@Body() payload:any) {
-    return {
-      message: 'Acción de crear',
-      payload,
-    }
+  create(@Body() payload:CreateProductDto) {
+    // return {
+    //   message: 'Acción de crear',
+    //   payload,
+    // }
+    this.productsService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id:number, @Body() payload:any) {
-    return {
-      id,
-      payload
-    }
+  update(@Param('id') id:number, @Body() payload:UpdateProductDto) {
+    // return {
+    //   id,
+    //   payload
+    // }
+    return this.productsService.update(+id, payload);
   }
 
   @Delete(':id')
   delete(@Param('id') id:number){
-    return {
-      message: `Delete was succefully with id: ${id}`
-    }
+    // return {
+    //   message: `Delete was succefully with id: ${id}`
+    // }
+    this.productsService.delete(+id);
   }
 }

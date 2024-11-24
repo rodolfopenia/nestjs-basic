@@ -1,5 +1,5 @@
 // tipado
-const myName = 'Rodolfo';
+const myName:string = 'Rodolfo';
 const myAge = 12;
 
 const suma = (a: number, b: number) => {
