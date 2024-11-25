@@ -3,7 +3,9 @@ import { Response } from 'express';
 import { ProductosService } from './../services/productos.service';
 import { ParseIntPipe } from './../../common/parse-int/parse-int.pipe';
 import { CreateProductDto, UpdateProductDto } from './../dtos/products.dto';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
 
@@ -12,6 +14,7 @@ export class ProductsController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get list of products'})
   getAll(
     //@Res() response: Response,
     @Query('limit') limit = 100, // TS puede saber que tipo de dato es
