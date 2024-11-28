@@ -19,4 +19,9 @@ export class AppController {
   newApi(){
     return 'Una api nueva';
   }
+
+  @Get('tasks')
+  tasks() {
+    return this.appService.getTasks();
+  }
 }

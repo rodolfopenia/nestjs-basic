@@ -12,7 +12,6 @@ import { DatabaseModule } from './database/database.module';
 import { Environments } from './environments';
 import config from 'config';
 
-
 @Module({
   imports: [
     HttpModule,

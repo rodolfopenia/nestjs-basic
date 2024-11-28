@@ -41,27 +41,16 @@ export class ProductsController {
 
   @Post()
   create(@Body() payload:CreateProductDto) {
-    // return {
-    //   message: 'Acción de crear',
-    //   payload,
-    // }
     this.productsService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id:number, @Body() payload:UpdateProductDto) {
-    // return {
-    //   id,
-    //   payload
-    // }
-    return this.productsService.update(+id, payload);
+  update(@Param('id', ParseIntPipe) id:number, @Body() payload:UpdateProductDto) {
+    return this.productsService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id:number){
-    // return {
-    //   message: `Delete was succefully with id: ${id}`
-    // }
-    this.productsService.delete(+id);
+  delete(@Param('id', ParseIntPipe) id:number){
+    this.productsService.delete(id);
   }
 }
