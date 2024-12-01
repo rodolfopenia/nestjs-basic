@@ -1,5 +1,6 @@
 import { Controller, Get, Query, Param, Post, Body, Put, Delete, HttpStatus, HttpCode, Res } from '@nestjs/common';
 import { Response } from 'express';
+
 import { ProductosService } from './../services/productos.service';
 import { ParseIntPipe } from './../../common/parse-int/parse-int.pipe';
 import { CreateProductDto, UpdateProductDto } from './../dtos/products.dto';
@@ -9,9 +10,9 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 @Controller('products')
 export class ProductsController {
 
-  constructor(private productsService: ProductosService){
-
-  }
+  constructor(
+    private productsService: ProductosService,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'Get list of products'})
@@ -41,7 +42,7 @@ export class ProductsController {
 
   @Post()
   create(@Body() payload:CreateProductDto) {
-    this.productsService.create(payload);
+    return this.productsService.create(payload);
   }
 
   @Put(':id')

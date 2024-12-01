@@ -1,11 +1,13 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+
+import { Brand } from './brand.entity';
 
 @Entity({name: 'products'})
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({type: 'varchar', length: 255})
+  @Column({type: 'varchar', length: 255, nullable: true})
   name: string;
 
   @Column({ type: 'text'})
@@ -17,6 +19,21 @@ export class Product {
   @Column({ type: 'int'})
   stock: number;
 
-  @Column({type: 'varchar'})
+  @Column({type: 'varchar', length: 255})
   image: string;
+
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: Date;
+
+  @ManyToOne(() => Brand, (brand) => brand.products)
+  brand: Brand;
 }
